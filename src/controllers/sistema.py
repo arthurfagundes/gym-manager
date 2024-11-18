@@ -10,7 +10,11 @@ from src.views.menu import (
     cadastrar_treinador,
     cadastrar_plano,
     escolher_aluno,
-    escolher_treino
+    escolher_treino,
+    exibir_alunos,
+    exibir_planos,
+    exibir_treinador,
+    exibir_treinos_aluno
 )
 
 
@@ -47,7 +51,7 @@ def main():
                 planos.append(plano_contrato)
                 print("Plano de contrato cadastrado com sucesso!")
         elif opcao == '4':
-            aluno_selecionado = escolher_aluno()
+            aluno_selecionado = escolher_aluno(alunos)
             if aluno_selecionado:
                 nome_treino = input("Nome do Treino: ")
                 nivel_dificuldade = input("Nível de Dificuldade: ")
@@ -71,6 +75,16 @@ def main():
                         f"Exercício '{nome_exercicio}' adicionado "
                         f"ao treino '{treino_selecionado.nome}'.")
         elif opcao == '6':
+            exibir_alunos(alunos)
+        elif opcao == '7':
+            exibir_treinador(treinadores)
+        elif opcao == '8':
+            aluno_selecionado = escolher_aluno(alunos)
+            if aluno_selecionado:
+                exibir_treinos_aluno(aluno_selecionado)
+        elif opcao == '9':
+            exibir_planos(planos)
+        elif opcao == '10':
             print("Saindo do sistema...")
             break
         else:
