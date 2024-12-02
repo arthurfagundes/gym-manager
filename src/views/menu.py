@@ -1,3 +1,6 @@
+from src.utils.helpers import obter_numero_inteiro
+
+
 def exibir_menu():
     print("\nMenu:")
     print("1. Cadastrar Aluno")
@@ -11,25 +14,30 @@ def exibir_menu():
 
 
 def obter_opcao_usuario():
-    return input("Escolha uma opção: ")
+    return obter_numero_inteiro(
+        "Escolha uma opção (1-8): ",
+        "Erro: Opção inválida. Escolha entre 1 e 8.",
+        min_valor=1,
+        max_valor=8
+    )
 
 
 def cadastrar_aluno(planos):
     try:
         nome = input("Nome do Aluno: ")
-        idade = int(input("Idade do Aluno: "))
+        idade = obter_numero_inteiro("Idade do Aluno: ",
+                                     "Erro: Idade inválida", min_valor=1)
         email = input("Email do Aluno: ")
         print("Escolha o plano do aluno:")
         for i, plano in enumerate(planos, 1):
             print(f"{i}. {plano.tipo} - R${plano.valor_mensal:.2f} por mês - "
                   f"{plano.duracao_meses} meses")
-        opcao_plano = int(input("Escolha uma opção (1-3): "))
-        if 1 <= opcao_plano <= 3:
-            plano_contrato = planos[opcao_plano - 1]
-            return nome, idade, email, plano_contrato
-        else:
-            print("Opção inválida. O aluno não será cadastrado.")
-            return None
+        opcao_plano = obter_numero_inteiro("Escolha uma opção: ",
+                                           "Erro: Escolha uma opção válida.",
+                                           min_valor=1,
+                                           max_valor=len(planos))
+        plano_contrato = planos[opcao_plano - 1]
+        return nome, idade, email, plano_contrato
     except ValueError:
         print(
             "ERRO: Insira um valor válido para idade, valor mensal ou duração!")
@@ -39,7 +47,8 @@ def cadastrar_aluno(planos):
 def cadastrar_treinador():
     try:
         nome = input("Nome do Treinador: ")
-        idade = int(input("Idade do Treinador: "))
+        idade = obter_numero_inteiro("Idade do Treinador: ",
+                                     "Erro: Idade inválida.", min_valor=18)
         email = input("Email do Treinador: ")
         especialidade = input("Especialidade do Treinador: ")
         return nome, idade, email, especialidade
@@ -55,13 +64,11 @@ def escolher_aluno(alunos):
     print("Alunos Cadastrados:")
     for i, aluno in enumerate(alunos):
         print(f"{i + 1}. {aluno.nome}")
-    try:
-        indice_aluno = int(input("Escolha o número do aluno para adicionar "
-                                 "um treino: ")) - 1
-        return alunos[indice_aluno]
-    except (ValueError, IndexError):
-        print("ERRO: Escolha um ID de aluno válido!")
-        return None
+        indice_aluno = obter_numero_inteiro("Escolha o número do aluno: ",
+                                            "Erro: Escolha um número válido.",
+                                            min_valor=1,
+                                            max_valor=len(alunos))
+        return alunos[indice_aluno - 1]
 
 
 def escolher_treino(aluno):
@@ -72,12 +79,11 @@ def escolher_treino(aluno):
     print("Treinos cadastrados:")
     for i, treino in enumerate(aluno.treinos):
         print(f"{i + 1}. {treino.nome}")
-    try:
-        indice_treino = int(input("Escolha o número do treino: ")) - 1
-        return aluno.treinos[indice_treino]
-    except (ValueError, IndexError):
-        print("ERRO: Escolha um ID de treino válido!")
-        return None
+        indice_treino = obter_numero_inteiro("Escolha o número do treino: ",
+                                             "Erro: Escolha um número válido.",
+                                             min_valor=1,
+                                             max_valor=len(treino))
+        return aluno.treinos[indice_treino - 1]
 
 
 def exibir_alunos(alunos):
