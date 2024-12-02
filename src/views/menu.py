@@ -82,7 +82,7 @@ def escolher_treino(aluno):
         indice_treino = obter_numero_inteiro("Escolha o número do treino: ",
                                              "Erro: Escolha um número válido.",
                                              min_valor=1,
-                                             max_valor=len(treino))
+                                             max_valor=len(aluno.treinos))
         return aluno.treinos[indice_treino - 1]
 
 
