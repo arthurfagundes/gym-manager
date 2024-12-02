@@ -1,5 +1,5 @@
 from .pessoa import Pessoa
-from .plano_contato import PlanoContrato
+from .plano_contrato import PlanoContrato
 
 
 class Aluno(Pessoa):

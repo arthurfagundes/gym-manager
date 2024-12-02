@@ -1,5 +1,5 @@
 from src.models.aluno import Aluno
-from src.models.plano_contato import PlanoContrato
+from src.models.plano_contrato import PlanoContrato
 from src.models.treinador import Treinador
 from src.models.treino import Treino
 from src.models.exercicio import Exercicio
