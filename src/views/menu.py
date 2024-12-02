@@ -2,32 +2,37 @@ def exibir_menu():
     print("\nMenu:")
     print("1. Cadastrar Aluno")
     print("2. Cadastrar Treinador")
-    print("3. Cadastrar Plano de Contrato")
-    print("4. Cadastrar Treino")
-    print("5. Cadastrar Exercício")
-    print("6. Listar Alunos")
-    print("7. Listar Treinadores")
-    print("8. Listar Treinos de Aluno")
-    print("9. Listar Planos de Contrato")
-    print("10. Sair")
+    print("3. Cadastrar Treino")
+    print("4. Cadastrar Exercício")
+    print("5. Listar Alunos")
+    print("6. Listar Treinadores")
+    print("7. Listar Treinos de Aluno")
+    print("8. Sair")
 
 
 def obter_opcao_usuario():
     return input("Escolha uma opção: ")
 
 
-def cadastrar_aluno():
+def cadastrar_aluno(planos):
     try:
         nome = input("Nome do Aluno: ")
         idade = int(input("Idade do Aluno: "))
         email = input("Email do Aluno: ")
-        tipo_plano = input("Tipo de Plano (Mensal, Trimestral, Anual):")
-        valor_mensal = float(input("Valor Mensal: "))
-        duracao_meses = int(input("Duração em Meses: "))
-        return nome, idade, email, tipo_plano, valor_mensal, duracao_meses
+        print("Escolha o plano do aluno:")
+        for i, plano in enumerate(planos, 1):
+            print(f"{i}. {plano.tipo} - R${plano.valor_mensal:.2f} por mês - "
+                  f"{plano.duracao_meses} meses")
+        opcao_plano = int(input("Escolha uma opção (1-3): "))
+        if 1 <= opcao_plano <= 3:
+            plano_contrato = planos[opcao_plano - 1]
+            return nome, idade, email, plano_contrato
+        else:
+            print("Opção inválida. O aluno não será cadastrado.")
+            return None
     except ValueError:
-        print("ERRO: Insira um valor válido para idade, "
-              "valor mensal ou duração!")
+        print(
+            "ERRO: Insira um valor válido para idade, valor mensal ou duração!")
         return None
 
 
@@ -41,16 +46,6 @@ def cadastrar_treinador():
     except ValueError:
         print("ERRO: Insira um valor válido para idade!")
         return None
-
-
-def cadastrar_plano():
-    try:
-        tipo_plano = input("Tipo de Plano (Mensal, Trimestral, Anual):")
-        valor_mensal = float(input("Valor Mensal: "))
-        duracao_meses = int(input("Duração em Meses: "))
-        return tipo_plano, valor_mensal, duracao_meses
-    except ValueError:
-        print("ERRO: Insira um valor válido para valor mensal!")
 
 
 def escolher_aluno(alunos):

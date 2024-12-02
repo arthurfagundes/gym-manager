@@ -8,33 +8,28 @@ from src.views.menu import (
     obter_opcao_usuario,
     cadastrar_aluno,
     cadastrar_treinador,
-    cadastrar_plano,
     escolher_aluno,
     escolher_treino,
     exibir_alunos,
-    exibir_planos,
     exibir_treinador,
     exibir_treinos_aluno
 )
 
 
-def main():
+def main(planos):
     alunos = []
     treinadores = []
-    planos = []
 
     while True:
         exibir_menu()
         opcao = obter_opcao_usuario()
         if opcao == '1':
-            dados_aluno = cadastrar_aluno()
+            dados_aluno = cadastrar_aluno(planos)
             if dados_aluno:
-                (nome, idade, email, tipo_plano, valor_mensal,
-                 duracao_meses) = dados_aluno
-                plano_contrato = PlanoContrato(tipo_plano, valor_mensal,
-                                               duracao_meses)
+                nome, idade, email, plano_contrato = dados_aluno
                 aluno = Aluno(nome, idade, email, plano_contrato)
                 alunos.append(aluno)
+                print(f"Aluno {nome} cadastrado com sucesso!")
         elif opcao == '2':
             dados_treinador = cadastrar_treinador()
             if dados_treinador:
@@ -43,14 +38,6 @@ def main():
                 treinadores.append(treinador)
                 print("Treinador cadastrado com sucesso!")
         elif opcao == '3':
-            dados_plano = cadastrar_plano()
-            if dados_plano:
-                tipo_plano, valor_mensal, duracao_meses = dados_plano
-                plano_contrato = PlanoContrato(tipo_plano, valor_mensal,
-                                               duracao_meses)
-                planos.append(plano_contrato)
-                print("Plano de contrato cadastrado com sucesso!")
-        elif opcao == '4':
             aluno_selecionado = escolher_aluno(alunos)
             if aluno_selecionado:
                 nome_treino = input("Nome do Treino: ")
@@ -59,7 +46,7 @@ def main():
                 aluno_selecionado.adicionar_treino(treino)
                 print(f"Treino '{nome_treino}' adicionado ao "
                       f"aluno {aluno_selecionado.nome}.")
-        elif opcao == '5':
+        elif opcao == '4':
             aluno_selecionado = escolher_aluno(alunos)
             if aluno_selecionado:
                 treino_selecionado = escolher_treino(aluno_selecionado)
@@ -74,19 +61,16 @@ def main():
                     print(
                         f"Exercício '{nome_exercicio}' adicionado "
                         f"ao treino '{treino_selecionado.nome}'.")
-        elif opcao == '6':
+        elif opcao == '5':
             exibir_alunos(alunos)
-        elif opcao == '7':
+        elif opcao == '6':
             exibir_treinador(treinadores)
-        elif opcao == '8':
+        elif opcao == '7':
             aluno_selecionado = escolher_aluno(alunos)
             if aluno_selecionado:
                 exibir_treinos_aluno(aluno_selecionado)
-        elif opcao == '9':
-            exibir_planos(planos)
-        elif opcao == '10':
+        elif opcao == '8':
             print("Saindo do sistema...")
             break
         else:
             print("Opção inválida. Tente novamente.")
-
