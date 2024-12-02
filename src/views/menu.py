@@ -118,6 +118,12 @@ def exibir_treinos_aluno(aluno):
             f"\n{i + 1}."
             f"Nome: {treino.nome} "
             f"\n   Nível de Dificuldade: {treino.nivel_dificuldade}")
+        if treino.exercicios:
+            print("Exercícios: ")
+            for exercicio in treino.exercicios:
+                print(f"   - {exercicio.exibir_detalhes()}")
+        else:
+            print("   Nenhum exercício cadastrado neste treino.")
 
 
 def exibir_planos(planos):
