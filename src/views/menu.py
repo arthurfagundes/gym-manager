@@ -1,5 +1,6 @@
 from src.utils.helpers import obter_numero_inteiro
-
+from src.utils.helpers import validar_email
+from src.utils.helpers import validar_nome
 
 def exibir_menu():
     print("\nMenu:")
@@ -24,23 +25,44 @@ def obter_opcao_usuario():
 
 def cadastrar_aluno(planos):
     try:
-        nome = input("Nome do Aluno: ")
-        idade = obter_numero_inteiro("Idade do Aluno: ",
-                                     "Erro: Idade inválida", min_valor=1)
-        email = input("Email do Aluno: ")
-        print("Escolha o plano do aluno:")
-        for i, plano in enumerate(planos, 1):
-            print(f"{i}. {plano.tipo} - R${plano.valor_mensal:.2f} por mês - "
-                  f"{plano.duracao_meses} meses")
-        opcao_plano = obter_numero_inteiro("Escolha uma opção: ",
-                                           "Erro: Escolha uma opção válida.",
-                                           min_valor=1,
-                                           max_valor=len(planos))
-        plano_contrato = planos[opcao_plano - 1]
+        while True:
+            nome = input("Nome do Aluno: ")
+            if validar_nome(nome):
+                break
+            else:
+                print(
+                    "ERRO: Nome inválido! O nome deve conter apenas letras e espaços!")
+        while True:
+            idade = obter_numero_inteiro("Idade do Aluno: ",
+                                         "ERRO: Idade inválida! Digite somente números",
+                                         min_valor=1,
+                                         max_valor=150)
+            if idade is not None:
+                break
+        while True:
+            email = input("Email do Aluno: ")
+            if validar_email(email):
+                break
+            else:
+                print("ERRO: O e-mail informado é inválido!")
+        while True:
+            print("Escolha o plano do aluno:")
+            for i, plano in enumerate(planos, 1):
+                print(
+                    f"{i}. {plano.tipo} - R${plano.valor_mensal:.2f} por mês - "
+                    f"{plano.duracao_meses} meses")
+            opcao_plano = obter_numero_inteiro("Escolha uma opção: ",
+                                               "ERRO: Escolha uma opção válida.",
+                                               min_valor=1,
+                                               max_valor=len(planos))
+            if opcao_plano is not None:
+                plano_contrato = planos[opcao_plano - 1]
+                break
+            else:
+                print("ERRO: Escolha uma opção válida!")
         return nome, idade, email, plano_contrato
     except ValueError:
-        print(
-            "ERRO: Insira um valor válido para idade, valor mensal ou duração!")
+        print("ERRO!")
         return None
 
 
